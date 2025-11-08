@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You Ohm Family 🎉</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    h1 {
+      font-size: 2.5rem;
+      color: #ff8fb1;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1.2rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body style="background-color:#fff0f6; animation:fadeIn 1s ease;">
+  <canvas id="confetti"></canvas>
+
+  <h1>Thank You Ohm Family 💕</h1>
+  <p>Terima kasih untuk semua tawa,kasih sayang, dan kebersamaan kita.  
+  Kalian akan selalu jadi bagian berharga dalam perjalanan ini 💫</p>
+  <p>With love,  
+  <strong>Pudan 🌸</strong></p>
+
+  <script>
+    // Simple confetti animation
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confettis = [];
+    const colors = ['#ffb6c1','#ffd6a5','#caffbf','#9bf6ff','#bdb2ff','#ffc6ff'];
+
+    function Confetti() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height - canvas.height;
+      this.size = Math.random() * 8 + 4;
+      this.color = colors[Math.floor(Math.random() * colors.length)];
+      this.speed = Math.random() * 3 + 1;
+      this.angle = Math.random() * 2 * Math.PI;
+    }
+
+    Confetti.prototype.update = function() {
+      this.y += this.speed;
+      this.x += Math.sin(this.angle);
+      if (this.y > canvas.height) {
+        this.y = -10;
+        this.x = Math.random() * canvas.width;
+      }
+    };
+
+    Confetti.prototype.draw = function() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    };
+
+    for (let i = 0; i < 150; i++) {
+      confettis.push(new Confetti());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettis.forEach(c => {
+        c.update();
+        c.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
